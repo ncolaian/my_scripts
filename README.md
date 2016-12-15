@@ -1,7 +1,7 @@
 # my_scripts
 This is a collection of some of my scripts that I have made. 
 
-metagenome_scripts
+metagenome_scripts:\n
 Contains scripts that were created for projects related to analyzing metagenome data.
   - analyzing_28S_data.pl => This program is a beginning script to view taxanomic data
   - analyzing_new_metagenome_tax_info.pl => This program creates a csv text file that can be passed to metagenome_taxa_graphing.R to create graphs analyzing the Eukaryotic species in a metagenome sample
