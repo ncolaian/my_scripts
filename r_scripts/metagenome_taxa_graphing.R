@@ -11,7 +11,7 @@ if ( length(args)!=2 ) {
 }
   
 table <- read.csv(args[1], header = TRUE, check.names=F)
-metadata <-read.delim(args[2], header = FALSE )
+metadata <-read.delim(args[2], header = FALSE)
 table.melted <- melt(table)
 full_table <- merge(table.melted, metadata, by.x = "variable", by.y = "V1")
 names(full_table)[names(full_table) == 'V6'] <- 'Group'
@@ -20,6 +20,9 @@ mycol <- c("variable", "Taxa_level", "Group_Name", "Group_Above", "value", "Grou
 full_table <- full_table[mycol]
 
 full_table <- as.data.frame(full_table)
+levels(full_table$Group) = c(levels(full_table$Group), "BK")
+full_table$Group[is.na(full_table$Group)] <- "BK"
+print(summary(full_table$Group))
 
 kingdom_subset <- full_table[full_table$Taxa_level == "K",]
 phylum_subset <- full_table[full_table$Taxa_level == "P",]
@@ -50,28 +53,28 @@ phylum_plot_byg <- ggplot(phylum_subset, aes(x=Group_Name, y=value, col = Group)
   geom_boxplot(outlier.size = NA, position = position_dodge(width=0.9)) + 
   geom_point(position=position_jitterdodge(dodge.width = 0.9))+
   ggtitle("Eukaryotic Phylums by Genotype")+
-  labs(x="Significant Phylums", y="Counts", col="Genotype")+
+  labs(x="Abundant Phylums", y="Counts", col="Genotype")+
   theme(plot.title = element_text(hjust = 0.5))
 
 phylum_plot_byage <- ggplot(phylum_subset, aes(x=Group_Name, y=value, col = Age)) +
   geom_boxplot(outlier.size = NA, position = position_dodge(width=0.9)) + 
   geom_point(position=position_jitterdodge(dodge.width = 0.9))+
   ggtitle("Eukaryotic Phylums by Age")+
-  labs(x="Age", y="Counts", col="Genotype")+
+  labs(x="Abundant Phylums", y="Counts", col="Age")+
   theme(plot.title = element_text(hjust = 0.5))
 
 fungi_plot_byage <- ggplot(subset(family_subset,Group_Above =="Fungi"), aes( x=Group_Name, y=value, col=Age)) +
   geom_boxplot(outlier.size = NA, position = position_dodge(width=0.9)) + 
   geom_point(position=position_jitterdodge(dodge.width = 0.9))+
   ggtitle("Fungi Families by Age")+
-  labs(x="Age", y="Counts", col="Genotype")+
+  labs(x="Abundant Families", y="Counts", col="Age")+
   theme(plot.title = element_text(hjust = 0.5))
 
 fungi_plot_byg <- ggplot(subset(family_subset,Group_Above =="Fungi"), aes( x=Group_Name, y=value, col=Group)) +
   geom_boxplot(outlier.size = NA, position = position_dodge(width=0.9)) + 
   geom_point(position=position_jitterdodge(dodge.width = 0.9))+
   ggtitle("Fungi Families by Genotype")+
-  labs(x="Significant Families", y="Counts", col="Genotype")+
+  labs(x="Abundant Families", y="Counts", col="Genotype")+
   theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(filename = "kingdom_plot_byg.png", plot = kingdom_plot_byg)
