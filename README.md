@@ -27,3 +27,8 @@ utility_scripts:
   - make_pe_tags_identical.pl => ensures the tags on paired end tags are identical. Important for some downstream analysis
   - fasta_file_separator.pl => creates individual fasta files from a file that contains many entries
   - reverse_dna_file.pl => the sequences will be transformed to the opposite strand. So it will be reversed and bases will be switched.
+  - pre_mult_align_seq_flip.pl => this ensure all the sequences in a multiple alignment file are on the same strand. Important to do before running muscle because it doesn't account for this.
+
+lib:
+ Contains some basic modules that are used in some of my scripts (A lot of them need to be updated)
+ - Master_aln.pm => This module needs to be updated. Currently it creates a scoring matrix between two sequences. Can then get the location and value of the max score
