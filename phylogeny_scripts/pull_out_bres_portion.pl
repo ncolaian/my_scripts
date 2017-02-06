@@ -28,7 +28,7 @@ GetOptions ('man'  => \$man,
             'btf=s'     => \$blast_tab_file,
             'af=s'      => \$assembly_file,
             'out|o=s'   => \$out,
-            'name=s'    => \$name,
+            'name:s'    => \$name,
             ) || die("There was an error in the command line arguements\n");
 
 # Use Pod usage for the Manual and Help pages
@@ -38,13 +38,18 @@ if ( $man )  {pod2usage(-verbose => 3) }
 #subroutines
 
 sub print_out_blast_seq {
-    my ( $sequence, $id, $FH, $id_href, $assembly_file, $name ) = @_;
+    my ( $sequence, $id, $FH, $id_href, $assembly_file ) = @_;
     my $start_end_aref = $id_href->{$id};
     my $start = $start_end_aref->[0];
     my $end = $start_end_aref->[1];
     my @full_sequence = split //, $sequence;
     
-    print $FH ">$name start=$start;end=$end;\n";
+    if ( defined $name ) {
+        print $FH ">$name contig_id=$id;start=$start;end=$end;\n";
+    }
+    else {
+        print $FH ">$id start=$start;end=$end;\n";
+    }
     
     for ( my $i = $start-1; $i < $end; $i++) {
         print $FH $full_sequence[$i];
@@ -101,7 +106,7 @@ foreach my $line ( @ass_lines ) {
 
 if ( $t_or_f == 1 ) {
     my $full_seq = join "", @sequence;
-    print_out_blast_seq( $full_seq, $id, $BSFILE, \%query_ids, $assembly_file, $name );
+    print_out_blast_seq( $full_seq, $id, $BSFILE, \%query_ids, $assembly_file );
 }
 
 

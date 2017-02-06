@@ -13,7 +13,7 @@ use Data::Dumper;
 use Statistics::Descriptive;
 use File::Temp qw/ tempfile tempdir /;
 use List::Util qw/min max/;
-use lib "../lib";
+use lib "/nas02/home/n/c/ncolaian/my_scripts/lib";
 use Master_aln;
 
 
