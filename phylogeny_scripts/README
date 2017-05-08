@@ -1,0 +1,23 @@
+Description of the scripts I have created for phylogeny work
+
+bsub_blast.sh:
+	This is a simple bash script that will run blast on all the assembled dr	osophila data
+	
+bsub_get_spades_sequences.sh:
+	will get the portion of the sequence that came up as a hit in the blast		file ( good for single hits )
+	
+get_comparitive_do_pos.pl:
+	used to get the drop out positions from a list of genes from different g	enomes. This is to ensure that the portion of sequence being pulled out		exists in all the genomes.
+	
+get_dropout_areas.pl:
+	will take a file that has the amount of hits each base has and determine	 if it's a dropout or not. It will then record the dropout positions wit	hin the sequence. The dropouts are calculated by any base that has less		that 3x the STD of reads map back to it.
+	
+remove_dropouts.pl:
+	once you have the positions of all the dropouts, you can use this progra	m to create concatenated genes w/o any dropouts
+
+get_ancestral_info.pl
+	an attempt to visualice the acestral information from a newick file. Thi	s script utilizes Bio::TreeIO and is a good resource showing how to util	ize it.
+
+pull_out_bres_portion.pl
+	This script goes through a blast results file and pulls out the sequence	s from the fasta file passed into the script ( Should be the query file		). The tab file from blast must follow this order -> ueryId, SbjID, Qsta	rt, Qend, Score, Total Length, # of Identical matches.
+

@@ -57,8 +57,8 @@ GetOptions ( 'man' => \$man,
              'uc_fa|uf=s'   => \$fasta_file,
              'otu_dir|od=s' => \$otu_dir,
              'uni_dir|ud=s' => \$unifrac_dir,
-             'min_reads'    => \$min_read_filt,
-             'min_samples'  => \$min_sample_filt,
+             'min_reads=i'    => \$min_read_filt,
+             'min_samples=i'  => \$min_sample_filt,
              'make_otu_path|mop=s' => \$make_otu_prg_path,
              ) || die("There was an error in the command line arguements");
 
@@ -130,23 +130,32 @@ sub filter_out_min {
     print $OUT $skip_line;
     print $OUT $first_line;
     
+    my $amn_filtered = 0;
+    
     foreach my $line ( <$FH> ) {
+        chomp $line;
         #keep track of the reads that are below threshold
-        my $below = 0;
+        my $pass = 0;
         $line =~ s/\.0//g;
         my @line_a = split /\t/, $line;
-        #go through and count reads that are below min
+        #go through and count reads that are above min
         foreach my $count ( @line_a ) {
             if ( $count =~ /^[0-9]*$/m ) {
-                if ( $count < $min_read_filt ) {
-                    $below++;
+                if ( $count >= $min_read_filt ) {
+                    $pass++;
                 }
             }
         }
-        if ( $below <= $min_sample_filt ) {
-            print $OUT $line;
+        
+        #Only print the lines that pass the filter
+        if ( $pass >= $min_sample_filt ) {
+            print $OUT $line, "\n";
+        }
+        else {
+            $amn_filtered++;
         }
     }
+    print "Amount of OTUS filtered: $amn_filtered\n";
     close( $FH );
     close( $OUT );
 }
@@ -352,7 +361,7 @@ else{
 $logger->info( "Checking Header" );
 check_OTU_headers("$otu_dir/otu_table_filt.txt");
 
-# get only the OTUs that are in the filtered OTU table
+#get only the OTUs that are in the filtered OTU table
 make_filt_rep_seqs();
 
 # convert the filtered OTU table back to biom format
@@ -404,8 +413,8 @@ This documentation refers to version 0.0.1
         --uni_dir|ud unifrac/
         --uc_fa|uf reads.fasta
         --make_otu_path|mop otu_programs/
-        [--min_reads 3]
-        [--min samples 10]
+        [--min_reads 3] 
+        [--min samples 10] 
         
         [--help]
         [--man]
@@ -413,19 +422,6 @@ This documentation refers to version 0.0.1
         [--verbose]
         [--quiet]
         [--logfile logfile.log]
-
-    --otu_dir | -od         Path to dir where output from all otu information is placed
-    --uc_fa | -uf           Path to the fasta file that will be used to create OTU's
-    --uni_dir | -ud         Path to dir with output from unfrac
-    --min_reads             Minimum reads used to filter otu's
-    --min_samples           Minimum # of samples needed over the min_reads to keep OTU
-    --make_otu_path | -mop  Path to the otu creation programs
-    --help | -h             Prints USAGE statement
-    --man                   Prints the man page
-    --debug	                Prints Log4perl DEBUG+ messages
-    --verbose               Prints Log4perl INFO+ messages
-    --quiet	                Suppress printing ERROR+ Log4perl messages
-    --logfile               File to save Log4perl messages
 
 
 =head1 ARGUMENTS
@@ -442,13 +438,15 @@ Path to where unifrac output will be stored
 
 Path to a fasta file with the data needed to create OTU's and the data that unifrac is desired to be run on.
 
-=head2 --min_reads
+=head2 [--min_reads]
 
-The minimum number of samples an otu must have to be considered relevant.
+The minimum number of counts an otu must have to be counted as significant. If min_reads is passed without a number it will not filter anything but otus with 0 counts. 
 
-=head2 --min_samples
+=head2 [--min_samples]
 
-The minimum number of samples that an otu must have over min_reads to be retained for downstream analysis
+The minimum number of significant counts that an otu must have to be retained for downstream analysis. If min_reads is passed without a number 0 will be used. Meaning if there is one significant count the otu will be retained.
+
+** If min_reads and min_samples are not passed no filtering will occur **
 
 =head2 --make_otu_path | -mop
 

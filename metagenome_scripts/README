@@ -1,0 +1,26 @@
+Quick explanation of the metagenome scripts:
+
+analyzing_28S_data.pl:
+	This program is a beginning script to view taxanomic data
+  
+analyzing_new_metagenome_tax_info.pl:
+	This program creates a csv text file that can be passed to metagenome_ta	xa_graphing.R to create graphs analyzing the Eukaryotic species in a met	agenome sample
+  
+get_tax_info.pl:
+	will retrieve the taxonomy information of genomes from the 97_otu_taxono	my.txt file. ( Path on killdevil is /proj/dangl_lab/data/databases/gg_13	_5_otus/taxonomy/97_otu_taxonomy.txt )
+  
+kog_db_specific.pl:
+	Will trim a full kog file into a kog file that only contains the kogs fo	und in the database
+
+updated_rRNA_pred_main:
+	original program made by Scott Yourstone. This program will run rRNA pre	diction to find all the 28S sequences in a metagenomic assembly file.
+
+counts_per_genome_in_a_sample.pl:
+	This script goes with the DAFE software. It will take the output files f	rom DAFE and return a file that has the number of reads that mapped to e	ach of the genomes that you pass in. The counts will be split by sample.	The files to pass in should be from DAFE_count.pl
+
+gene_copy_number:
+	In the script it says it is kog specific, however it will work on any gr	ouping that you would like. You just have to pass in the correct group n	ame in with -group|g. This creates a file of the number of times a certa	in kog shows up in each genome that you pass in.
+
+get_genome_counts:
+	This returns the number of counts seen for each genome that you pass into the script. The counts will be divided by genome, not by both sample and genome. The file that you pass in should be from DAFE_count.pl
+
