@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 
-#This program will add 
+#This program will add cog or gene info to poolcount files used in Barseq. The gene file is the .GC file used in Barseq analysis. The first two columns are what are being placed into the poolcount file, so make sure the info you want to add is there.
 
 use strict;
 use warnings;
@@ -19,6 +19,7 @@ my $man = 0;
 my $gene_file;
 my $count_file;
 my $out_file;
+my $cog_file;
 
 #Read in the variables from the command line
 GetOptions( 'man'   =>  \$man,
@@ -41,8 +42,15 @@ my $gfo = file( $gene_file );
 my @gene_file_array = $gfo->slurp( split=>qr/\t/,chomp=>1 );
 my $discard_hder_ln = shift @gene_file_array;
 
+#my $cogfo = file( $cog_file );
+#my @cog_file_array = $cogfo->slurp( split=>qr/\t/, chomp=>1 );
+#my $hdr = shift @cog_file_array;
+
 #Create a hash to search for the genes
 my $gene_href = create_gene_hash( \@gene_file_array );
+
+#Create hash to look for Cog Fxn
+
 
 open my $CF, "<", $count_file;
 my $header = <$CF>;
@@ -50,7 +58,7 @@ chomp $header;
 
 open my $OUT, ">", $out_file;
 
-print $OUT "$header\tgeneid\tgenename\n";
+print $OUT "$header\tgeneid\tcog\n";
 
 my $no_gene = 0;
 
@@ -84,11 +92,11 @@ sub create_gene_hash {
         
         if ( $href{ $scaffold } ) {
             my $cur_href = $href{ $scaffold };
-            $cur_href->{$com} = [$aref->[0], $aref->[8]];
+            $cur_href->{$com} = [$aref->[0], $aref->[1]];  
         }
         else {
             my %scaf_href;
-            $scaf_href{$com} = [$aref->[0], $aref->[9]];
+            $scaf_href{$com} = [$aref->[0], $aref->[1]];
             $href{$scaffold} = \%scaf_href;
         }
     }
