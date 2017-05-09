@@ -1,0 +1,31 @@
+This is all my scripts for performing barseq.
+
+Barseq was run on CL21 - The Genome ID is 2558309150
+
+The steps to run barseq are as follows ->
+
+1) Get all the necessary files to perform barseq. This includes a tsv metadata file. A pool file from tnseq, and the .GC file that was used to create the tnseq library. ( A small descrption of the metadata file can be found at /netscr/ncolaian/barseq/columns_for_metadata_tsv.txt )
+
+   a) If you want to collapse the counts based upon cogs, clstr, or fxn you need to change the first two columns of the .GC file. ( This is also what you should change if you want to collapse the counts on something else )
+   
+   - To create a cluster and cog GC file which will aggregate cluster the counts based on cluster -> use create_cog_clstr_gc.pl
+   - To create two gc files - 1 being able to aggregate counts on cogs and the other on fxn -> use create_new_gc.pl
+   
+     -Both of these require the all_annote.txt for the genome from the DAFE database, the original genes.GC file, and the cognames2003-2014.tab file located at /netscr/yourston/compMetaG/metadata
+
+2) Need to create a directory containing all the fastq files from the experiments. You need to make sure that the names include ITXXX ( X's are a number index ) and that this index is included in the metadata file. The name of this directory must also be in the metadata file under SetName.
+
+   a) to combine the fastq samples ( i.e. pooling the data ) use the script combine_samples.sh
+
+3) Run run_barseq_pipeline.pl => this creates the .colsum and .poolcount file ( the help page on this is pretty good )
+
+   a) you can add cog or gene information to the poolcount file using add_gene_idnames_bsq_reg.pl. This is important in many of the R scripts for aggregating the counts. It will add the first two columns of the .GC file to the end of the poolcount file.
+
+4) Run BarSeqR.pl from the directory /proj/cdjones_lab/ncolaian/apps/feba/bin. It is important to run our data from this directory because I removed the filtering and normalization steps so that the logratios as calculated in the paper were performed on our data. If it is not run on this it will fail.
+
+   a) in the resulting html directory the logratio file that you are looking for is fit_logratios_unnormalized.tab
+
+   b) if you'd like to determine if a logratio is associated with a fxn or not use add_fxn_col_tolr.pl. This will add a column to the logratio file that will tell you if that cog has a fxn or not. The logratio file must have cogs in the locusId column
+
+#### More Script Description ####
+

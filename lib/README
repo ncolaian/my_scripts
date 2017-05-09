@@ -1,0 +1,2 @@
+ Master_aln.pm:
+ This module needs to be updated. Currently it creates a scoring matrix between two sequences. Can then get the location and value of the max score. Can be used for local or global alignment. It is currently used as a pre-alignment fxn to determine if a sequence needs to be flipped.

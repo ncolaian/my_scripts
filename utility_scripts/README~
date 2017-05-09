@@ -1,0 +1,11 @@
+Description of the scripts that I have created that was not for any particular project
+
+reverse_dna_file.pl:
+	This script takes a fasta file and returns a file in the same directory		with every sequence reverse complimented
+
+pre_mult_align_seq_flip.pl:
+	This script should be performed on a dna file before aligning. It uses m	y master aligner to ensure that the sequences in the file are in the cor	rect orientation. The sequences are assumed to already be closely relate	d since it is a pre-alignment file. Becomes important when running muscl	e since an incorrect orientation can mess up the alignment produced.
+
+updated_unifrac_pipeline:
+	This script runs a pipeline originally created by Scott Yourstone. The s	cript will perform a full unifrac analysis on a fasta file. It will make	 otus, filter out contaminants, provides a manual filter option, build a	n MSA, builds a phylogeny, runs unifrac, calculates pcoa, and runs alpha	 diversity.
+
