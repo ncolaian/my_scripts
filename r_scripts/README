@@ -1,0 +1,50 @@
+This describes the R scripts in detail ( Input and Output )
+
+abundancecalls_readsdynamic.R:
+	To run this script you need a full da table from DAFE, a file containing the total reads of a sample per genome, and the DAFE metadata file. For graphing the ordered ids from DAFE output is needed too. The output is a heatmap that contains 4 columns. Looking at DA down and DA up calls, the log of the total reads, and the difference between the RZ and BK reads
+
+colonization_bseq.R:
+	To run this you need the barseq metadata file and the poolcount file from the first portion of the barseq pipeline. It will report the mean colonization events per day ( we counted each barcode read as a colonization event ). A facet wrapped bar plot will also be created that is separated by sample type and the x-axis is plotted by day.
+
+count_graphing_r_code.R
+	You need to have a count table that has three columns 1) Fxn ie cog, Kog, etc 2) genomeIds 3) counts . This means that the file counts the number of times a kog shows up in a genome. This is for database metagenome mapping. You also need the ordered ids from DAFE. This will create a copy number heatmap of the number of a fxn in each genome.
+
+create_total_reads_graphs.R
+	You need to have the metadata file that includes the read counts for each sample. You also need to create a csv that includes the Index, # of reads, # of reads used, and the fraction of reads used. This info is in the .colsum file from barseq. You also need a poolcount file without anything added to the end of it. The resulting bargraphs will represent the total reads in the experiment, as well as analyze the amount of reads lost per sample - looking at the pattern by day and sample type.
+
+dafe_deseq.R
+	This was a test to run DAFE with DeSeq. We found that it worked with version 1 of DAFE but because there are not enough reads in a majority of genomes in V2 it did not work -> Could not compute the dispersion parameters
+
+downsampling_pool.R
+	This script creates a new pool file. This pool file should have the columns geneid and genename added ( done by using the add_gene_idnames_bsq_reg.pl script ). This ensures that everything under the geneid has the same number of barcodes that produce reads ( meaning the cog has the same number of barcodes ). Can change the amount of times you downsample in the program. Currently set to 500. Need the mice and caret packages. The output will be in the same format as the poolcount file put into the script.
+
+find_adj_val.R
+	This script takes a full da table from the output of DAFE. It will return a file that has three columns - Cogs, Up_genome, Down_genome. What this does is find fxns ( in this case cogs ) that have different abundance calls in genomes that are directly adjacent to each other in the tree. The script assumes the genomes are in order via the columns of the DA table - true from DAFE documentation and knowledge
+
+find_empty_genomes.R
+	This script takes a count tabe ( number of a particular kog in a genome ) and returns a vector containing all the genomes that have no counts in any of the kogs
+
+first_heatmap_barseq.R
+	This script takes the barseq genomes all_annote file, the cognames metadata file, poolcount file, and the barseq metadata file. This will create heatmaps on the barseq data analyzing the counts found per cog and fxn in the graphs.
+
+log_ratio_FEBA.R
+	This script takes an unnormalized fit log ratio file that is part of the final output of Barseq analysis. Will create 3 histograms comparing the logratios. It will create a heatmap comparing the logratios of the samples. This currently written very specifically for the CL21_comb output.
+
+map_stat_graph.R
+	This script will create a simple bargraph that compares the mapping stats from the database and the assembly. It needs two files - both containing the sample ID the percentage of reads that map either to the database or the assemblies depending on the file.
+
+meta_vs_DAFE.R
+	This script compares the output from DAFE to the output of Barseq. Need to make sure the first column of the barseq data is of cog names -> especially if the DAFE output is by Cogs. These files are from a single genome so the file you're looking for in DAFE is gene_counts_id60_cog_agg_da_vec.txt. This will perform t-tests comparing the different abundance calls ( up, down, or nothing ). Creates a boxplot of the data. Can also perform a log_fold_change analysis which compares the logfold change from DAFE to the barseq logratios. Need the gene_counts_id60_cog_agg_tags_data.txt from DAFE.
+
+metagenome_taxa_graphing.R
+	need to pass in the file created from analyzing_28S_data.pl. Also need to pass in metagenome age and genotype data to make graphs that analyze the different groups represented in the samples.
+
+per_gene_barseq.R:
+	This script takes a poolcount file and the metadata file. It creates graphs of the amount of reads per barcode and the amount of reads per geneId ( a column in the poolcount file )
+
+plot_read_map_stats:
+	This looks at the total amount of 28S data that maps back to the samplesused in the original metagenome analysis.
+
+start_position_bargraph.R:
+	This script creates bargraphs of the average position of the anchor sequence in barseq. The input files have no headers but 3 columns -> barcode, line, and BP from start. The idea was to count the amount of times an anchor sequence was in the same place.
+
