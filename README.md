@@ -4,13 +4,11 @@ This is a collection of some of my scripts that I have made.
 metagenome_scripts: 
  Contains scripts that were created for projects related to analyzing metagenome data.
  
- 
 phylogeny_scripts: 
  Contains scripts that were created for projects related to phylogeny creation.
   
 r_scripts: 
  Contains any R scripts that I have created. Mostly scripts to make ggplot graphs.
-  - metagenome_taxa_graphing.R => Creates graphs that display eukaryotic taxa information.
   
 utility_scripts: 
  Contains some utility scripts that were created to do jobs that could apply to multiple different projects
