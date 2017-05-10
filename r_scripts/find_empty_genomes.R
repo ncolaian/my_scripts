@@ -5,8 +5,8 @@ if( length(args) != 2 ) {
   stop("Need to specify the 2 files to perform the graph on, and the outfile")
 }
 #For testing
-#kog_table <- read.delim("/Users/ncolaian/Documents/Scott Fungal Work/metagenome_count_test_info/kog_count_tbl.txt",
- #                       header=TRUE, sep="\t", check.names = FALSE)
+kog_table <- read.delim("/Users/ncolaian/Documents/Scott_Fungal_Work/metagenome_count_test_info/kog_count_tbl.txt",
+                     header=TRUE, sep="\t", check.names = FALSE)
 
 kog_table <- read.delim( args[1], header=TRUE, sep="\t", check.names = FALSE)
 

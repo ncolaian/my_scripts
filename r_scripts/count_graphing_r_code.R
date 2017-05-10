@@ -20,12 +20,12 @@ params = matrix(c(
 ), byrow=TRUE, ncol=4)
 opt = getopt(params)
 
-#tfile = "/Users/ncolaian/Documents/Scott Fungal Work/metagenome_count_test_info/kog_count_tbl_alt.txt"
+tfile = "/Users/ncolaian/Documents/Scott_Fungal_Work/metagenome_count_test_info/kog_count_tbl_alt.txt"
 #tgfile = "/Users/ncolaian/Documents/Scott Fungal Work/metagenome_count_test_info/ordered_ids.txt"
 
 # Read in data
 count_data <- read.table(opt$count_file, header = TRUE, sep="\t")
-#count_data <- read.table(tfile, header = TRUE, sep="\t")
+count_data <- read.table(tfile, header = TRUE, sep="\t")
 
 #set the order of the genomeID's
 #y_label <- read.table(tgfile,header = FALSE, sep="\n")
