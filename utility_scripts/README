@@ -9,3 +9,6 @@ pre_mult_align_seq_flip.pl:
 updated_unifrac_pipeline:
 	This script runs a pipeline originally created by Scott Yourstone. The script will perform a full unifrac analysis on a fasta file. It will make otus, filter out contaminants, provides a manual filter option, build an MSA, builds a phylogeny, runs unifrac, calculates pcoa, and runs alphadiversity.
 
+splitfastq.pl:
+	This will split a paired end fastq file if there is a 1 and 2 identifier in the names of the name lines of the fastq's
+

@@ -1,0 +1,8 @@
+This directory contains some scripts I created for analyzing mapping data
+
+get_bbmap_err_stats.pl:
+	This program will take in two sam files results from mapping and create a file that looks at the percentage of reads and number of reads that map to the database vs the assemblies created. This file can be used in R to create graphs
+
+get_unmapped_reads.pl:
+	This script will take a bam directory that contains many Bam files. The samples file will contain the sample names of the bam files you would like to get the unmapped reads for. The sample read directory is the directory where the original reads are located.
+

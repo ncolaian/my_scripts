@@ -1,0 +1,11 @@
+name=hypo_Luzon
+
+mkdir -p /lustre/scr/n/c/ncolaian/spadesdata/$name
+
+bsub -q bigmem -M 150 -n 8 -R "span[hosts=1]" "spades.py --pe1-1 /proj/cdjones_\
+lab/HTSF/150408_UNC18-D00493_0222_BC6C37ANXX/WAD_04-hypo_Luzon_CCGTCC_L001_R1_0\
+01.fastq.gz --pe1-2 /proj/cdjones_lab/HTSF/150408_UNC18-D00493_0222_BC6C37ANXX/\
+WAD_04-hypo_Luzon_CCGTCC_L001_R2_001.fastq.gz --pe2-1 /proj/cdjones_lab/HTSF/15\
+0408_UNC18-D00493_0222_BC6C37ANXX/WAD_04-hypo_Luzon_CCGTCC_L002_R1_001.fastq.gz\
+ --pe2-2 /proj/cdjones_lab/HTSF/150408_UNC18-D00493_0222_BC6C37ANXX/WAD_04-hypo\
+_Luzon_CCGTCC_L002_R2_001.fastq.gz -o /lustre/scr/n/c/ncolaian/spadesdata/${name}"
