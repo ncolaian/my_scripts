@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 
-# This program will take the output from the local r script ___, which reports the cogs that have adjacent genomes that have different abundance calls. It will then create a directory containing fasta files of all the genes that are associated with that cog in the genome.
+# This program will take the output from the local r script find_adj_val.R, which reports the cogs that have adjacent genomes that have different abundance calls. It will then create a directory containing fasta files of all the genes that are associated with that cog in the genome.
 
 #Need to have a way to 
 
