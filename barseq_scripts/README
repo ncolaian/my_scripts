@@ -29,3 +29,26 @@ The steps to run barseq are as follows ->
 
 #### More Script Description ####
 
+add_fxn_col_tolr.pl:
+	This script takes the unnormalized_logratio file from the final output of barseq and adds an extra column at the end of the file that flags it as having a fxn or not. Pretty easy to then graph in R.
+
+add_gene_idnames_bsq_reg.pl:
+	This script will take in a poolcount file and add two columns at the end of the file -> geneid and cog. This will be the information from the first two columns of a .GC file that you use to add this info.
+
+combine_poolcounts.pl:
+	This will literally combine the poolcounts Indexs if the barcodes are in the same order. This means that the poolcount will add the index columns from one poolcount file to the other. Good if you do two separate counts on the same data.
+
+merge_poolcounts.pl:
+	This will take two poolcount files that have the identical row and column order. The counts will be compared and the count with the highest amount will be retained for the printing of the final poolcount file.
+
+combine_samples.sh:
+	This is a small shell script to combine the fastq files of samples. This is really good for combining files when you are pooling the reads. Just need to know the Index numbers that correspond to the pooling you'd like to do.
+
+create_cog_clstr_gc.pl:
+	This will create a single gc file that outputs the Clustr information under the geneid ( allowing the poolcount file to aggregate counts based on cluster in later analysis ). It will also put the cog information in the second column for reference.
+
+create_new_gc.pl:
+	Similar to create_cog_clstr. Takes in a .gc file and returns two .gc files with the first two columns changed. One will have the first two columns changed to COG info, and the other will have the columns changed to cogFxn info.
+
+run_barseq_pipeline:
+	This has good documentation. It is the first step of our barseq pipeline. It will create a .poolcount and .colsum file. Must make sure the inputs are formatted correctly - including the genome directory. After this step you can modify the poolcount file and then run BarSeqR.pl. If you want to run the whole thing at once you can uncomment the BarSeqR.pl portion of the script.
